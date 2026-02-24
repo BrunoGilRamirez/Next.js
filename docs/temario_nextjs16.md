@@ -10,6 +10,7 @@
 ## Contexto para el agente
 
 Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo como referencia para:
+
 - Saber en qué día y tema está trabajando actualmente
 - Contextualizar preguntas técnicas dentro del nivel de avance esperado
 - Sugerir el siguiente tema cuando el estudiante termina uno
@@ -17,6 +18,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Usar la terminología correcta de Next.js 16 (ej: `proxy.ts` en lugar de `middleware.ts`, `use cache` en lugar de caching implícito)
 
 ### Cambios clave de Next.js 16 a tener en cuenta
+
 - `middleware.ts` fue reemplazado por `proxy.ts` (Node.js runtime). `middleware.ts` sigue disponible para Edge runtime pero está deprecado.
 - El caching es **100% opt-in** con la directiva `"use cache"`. Ya no hay caching implícito como en v14/v15.
 - **Cache Components** + **Partial Pre-Rendering (PPR)** se habilitan con `cacheComponents: true` en `next.config.ts`.
@@ -31,21 +33,23 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 
 ## Mapa de fases
 
-| Días  | Fase                                    | Temas principales                                      |
-|-------|-----------------------------------------|--------------------------------------------------------|
-| 01–03 | Fundamentos y arquitectura              | App Router, rendering, data fetching                   |
-| 04–06 | Full Stack con Next.js                  | Server Actions, Route Handlers, bases de datos         |
-| 07–09 | UI, estilos, SEO y autenticación        | Tailwind, animaciones, Auth.js v5, proxy.ts            |
-| 10–11 | Caching avanzado y performance          | Cache Components, PPR, Turbopack, testing              |
-| 12–13 | i18n, deploy y CI/CD                    | next-intl, Vercel, Docker, GitHub Actions              |
-| 14–15 | Arquitectura avanzada e IA              | Turborepos, patrones de producción, AI SDK             |
+| Días  | Fase                             | Temas principales                              |
+| ----- | -------------------------------- | ---------------------------------------------- |
+| 01–03 | Fundamentos y arquitectura       | App Router, rendering, data fetching           |
+| 04–06 | Full Stack con Next.js           | Server Actions, Route Handlers, bases de datos |
+| 07–09 | UI, estilos, SEO y autenticación | Tailwind, animaciones, Auth.js v5, proxy.ts    |
+| 10–11 | Caching avanzado y performance   | Cache Components, PPR, Turbopack, testing      |
+| 12–13 | i18n, deploy y CI/CD             | next-intl, Vercel, Docker, GitHub Actions      |
+| 14–15 | Arquitectura avanzada e IA       | Turborepos, patrones de producción, AI SDK     |
 
 ---
 
 ## Día 1 — Arquitectura de Next.js 16 y App Router
+
 **Duración:** 6 horas
 
 ### Setup y herramientas (1h)
+
 - Instalación con `create-next-app@latest` (Turbopack activado por defecto)
 - Opciones del CLI: `--typescript`, `--tailwind`, `--app`, `--src-dir`
 - Estructura de carpetas: `app/`, `public/`, `src/` (opcional)
@@ -55,6 +59,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - DevTools MCP: configuración para debugging asistido por IA
 
 ### File Conventions — archivos especiales del App Router (1.5h)
+
 - `page.tsx` — define una ruta pública accesible
 - `layout.tsx` — layout compartido y layouts anidados (no se re-monta)
 - `template.tsx` — igual que layout pero sí se re-monta (cuándo usarlo)
@@ -67,6 +72,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Archivos de metadata: `favicon.ico`, `opengraph-image`, `robots.txt`, `sitemap.xml`
 
 ### Sistema de enrutamiento completo (2h)
+
 - Rutas estáticas: `app/about/page.tsx` → `/about`
 - Rutas dinámicas: `[slug]`, `[id]` — acceso con `params`
 - Rutas dinámicas opcionales: `[[...slug]]`
@@ -83,6 +89,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `notFound()` — lanzar 404 desde código
 
 ### Server Components vs Client Components (1.5h)
+
 - Modelo mental: todo es Server Component por defecto
 - Directiva `"use client"` — cuándo y por qué agregarla
 - Directiva `"use server"` — Server Actions y funciones de servidor
@@ -96,9 +103,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 2 — Data Fetching y Estrategias de Rendering
+
 **Duración:** 6 horas
 
 ### Fetching de datos en Server Components (2h)
+
 - `async/await` directo en `page.tsx` y `layout.tsx` (sin `useEffect`)
 - `fetch` nativo extendido por Next.js — cache y revalidación integrada
 - Fetching en paralelo con `Promise.all` y `Promise.allSettled`
@@ -109,6 +118,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - SWR y React Query para fetching en Client Components
 
 ### Estrategias de rendering (1.5h)
+
 - Static Rendering — generado en build time (default sin datos dinámicos)
 - Dynamic Rendering — generado en cada request
 - Streaming con Suspense — cargar partes de la UI progresivamente
@@ -119,6 +129,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `connection()` — forzar render en request time (Next.js 16)
 
 ### Caching en Next.js 16 (2h)
+
 - Caching es **100% opt-in** en Next.js 16 (ya no implícito)
 - Directiva `"use cache"` — cachear páginas, componentes y funciones
   - `"use cache"` en `page.tsx` — caching a nivel de ruta completa
@@ -135,6 +146,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `<Activity>` component — preservar estado entre navegaciones
 
 ### Manejo de errores y estados (0.5h)
+
 - `error.tsx` con `useError()` para acceder al error
 - Boundary de errores anidados — errores capturados al nivel más cercano
 - Errores en layouts vs errores en pages
@@ -144,9 +156,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 3 — Full Stack: Server Actions y Route Handlers
+
 **Duración:** 6 horas
 
 ### Server Actions (2.5h)
+
 - Qué son las Server Actions y cómo funcionan internamente
 - Declarar con directiva `"use server"` — inline vs archivo separado
 - Formularios con Server Actions — `action={serverFn}` sin `onSubmit`
@@ -162,6 +176,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Server Actions en Client Components — import desde archivo `"use server"`
 
 ### Route Handlers (1.5h)
+
 - Crear `route.ts`: `export function GET/POST/PUT/DELETE/PATCH`
 - `NextRequest` y `NextResponse` — leer headers, cookies, body, searchParams
 - Cuándo usar Route Handler vs Server Action vs backend Express
@@ -172,6 +187,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Webhooks con Route Handlers — verificar signatures
 
 ### Base de datos y ORM (1.5h)
+
 - Opciones de DB serverless gratuitas: Neon, Supabase, PlanetScale, Turso
 - Conectar Neon (PostgreSQL) directamente desde Server Components
 - **Drizzle ORM** — setup, schema, migraciones (opción ligera recomendada)
@@ -182,6 +198,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Flujo completo: form → Server Action → DAL → DB → revalidate → UI
 
 ### Variables de entorno y seguridad de datos (0.5h)
+
 - Jerarquía: `.env`, `.env.local`, `.env.development`, `.env.production`
 - Variables públicas `NEXT_PUBLIC_` — disponibles en cliente
 - Variables privadas — solo accesibles en servidor
@@ -191,9 +208,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 4 — Estilos, UI y Optimización de Assets
+
 **Duración:** 6 horas
 
 ### Tailwind CSS en Next.js 16 (1.5h)
+
 - Tailwind v4 integrado — configuración en `globals.css` (sin `tailwind.config.js`)
 - `@theme` en CSS — definir design tokens personalizados
 - Utility classes esenciales — layout, tipografía, colores, spacing
@@ -204,12 +223,14 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `shadcn/ui` — componentes sin estilos propios sobre Radix UI
 
 ### CSS Modules y otras opciones de estilos (0.5h)
+
 - CSS Modules — scope por componente (`.module.css`)
 - Sass con Next.js — instalación y uso
 - CSS-in-JS en App Router — limitaciones con Server Components
 - styled-components y emotion en modo client-only
 
 ### Optimización de imágenes y fuentes (1.5h)
+
 - Componente `<Image>` de `next/image` — obligatorio conocerlo
   - Props: `src`, `alt`, `width`, `height`, `fill`, `priority`
   - Lazy loading automático, formatos WebP/AVIF
@@ -223,6 +244,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Nuevos defaults de `next/image` en Next.js 16 (breaking change)
 
 ### Scripts y lazy loading (0.5h)
+
 - Componente `<Script>` — estrategias: `beforeInteractive`, `afterInteractive`, `lazyOnload`
 - `dynamic()` de `next/dynamic` — lazy loading de Client Components
   - `ssr: false` para componentes que requieren `window`/`document`
@@ -230,6 +252,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Lazy loading de librerías pesadas
 
 ### Animaciones en Next.js (1.5h)
+
 - View Transitions API — integración nativa en React 19.2
 - Framer Motion con Next.js — instalación y patrones con App Router
   - `AnimatePresence` para transiciones de página
@@ -241,9 +264,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 5 — Autenticación y Autorización con Auth.js v5
+
 **Duración:** 6 horas
 
 ### Conceptos base de autenticación (0.5h)
+
 - Autenticación vs Autorización — diferencias y capas
 - Estrategias: JWT vs Session-based — cuándo usar cada una
 - OAuth 2.0 — flujo básico (GitHub, Google como proveedores)
@@ -251,6 +276,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Opciones del ecosistema: Auth.js v5, Clerk, Supabase Auth, Lucia
 
 ### Auth.js v5 (NextAuth.js v5) — setup completo (2h)
+
 - Instalación y diferencias clave respecto a v4
 - Archivo `auth.ts` — configuración central con `NextAuth()`
 - Archivo `auth.config.ts` — config sin dependencias de adapter (para `proxy.ts`)
@@ -265,6 +291,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Database adapter con Drizzle o Prisma
 
 ### Protección de rutas con proxy.ts (1.5h)
+
 - `proxy.ts` — el nuevo middleware de Next.js 16 (Node.js runtime)
 - Integrar Auth.js con `proxy.ts` — export de `auth` como `proxy`
 - `matcher` config — qué rutas proteger
@@ -276,6 +303,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Proteger Server Components con `auth()` en el componente
 
 ### Autorización basada en roles (RBAC) (1h)
+
 - Añadir campo `role` al token JWT y a la sesión
 - Verificar rol en `proxy.ts` para rutas de admin
 - Data Access Layer (DAL) con verificación de autorización
@@ -283,6 +311,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Patrón: optimistic vs pessimistic authorization
 
 ### Sesiones y seguridad (1h)
+
 - Estrategia JWT vs Database sessions — configuración
 - Expiración de sesión y refresh token rotation
 - Cookies: `httpOnly`, `secure`, `sameSite` — configuración
@@ -295,9 +324,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 6 — State Management y Patrones Avanzados de React
+
 **Duración:** 6 horas
 
 ### Estado del servidor vs estado del cliente (1h)
+
 - URL como estado — `searchParams` para estado compartible
 - `useSearchParams()` para leer, `router.push` para actualizar
 - `nuqs` — librería para sincronizar estado con URL params
@@ -306,6 +337,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Provider pattern con Server Components como `children`
 
 ### Zustand — state management ligero (1h)
+
 - Instalación y setup básico
 - Stores — crear y acceder desde cualquier Client Component
 - Slices pattern para stores grandes
@@ -314,6 +346,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Hidratación SSR — zustand en Next.js App Router
 
 ### React Query / TanStack Query (1.5h)
+
 - Cuándo usar React Query vs fetch directo en Server Components
 - Setup: `QueryClient`, `QueryClientProvider` en layout
 - `useQuery` — fetching con cache, loading, error states
@@ -324,6 +357,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Infinite scroll con `useInfiniteQuery`
 
 ### Formularios avanzados (1.5h)
+
 - React Hook Form + Zod — validación type-safe
 - Integrar RHF con Server Actions
 - `useActionState` para feedback de Server Actions
@@ -333,6 +367,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Validación client-side + server-side con el mismo schema Zod
 
 ### Hooks y patrones avanzados de React 19 (1h)
+
 - `use()` — leer promesas y contexto en Client Components
 - `useOptimistic()` — UI optimista antes de confirmar la mutación
 - `useEffectEvent()` — nuevo en React 19.2 (stable)
@@ -343,9 +378,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 7 — SEO, Metadata y Accesibilidad
+
 **Duración:** 6 horas
 
 ### Metadata API completa (2h)
+
 - Objeto `metadata` estático — exportado desde `page.tsx` y `layout.tsx`
 - `generateMetadata()` — metadata dinámica con datos async
 - Herencia y merge de metadata — layouts → pages
@@ -360,6 +397,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - JSON-LD con `next/script` para datos estructurados (schema.org)
 
 ### Imágenes OG dinámicas (1h)
+
 - `opengraph-image.tsx` — archivo especial para imagen OG dinámica
 - `ImageResponse` de `next/og` — renderizar React → imagen PNG
 - Dimensiones recomendadas: 1200x630
@@ -368,6 +406,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `twitter-image.tsx` — imagen específica para Twitter
 
 ### Sitemap, robots y archivos de metadata (1h)
+
 - `sitemap.ts` — generar sitemap dinámico con `generateSitemaps()`
 - `robots.ts` — configurar reglas de crawling
 - Sitemap para rutas dinámicas — generar URLs de productos/posts
@@ -376,6 +415,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `manifest.ts` — configurar PWA manifest desde código
 
 ### Accesibilidad (a11y) en Next.js (1h)
+
 - Route announcements — Next.js anuncia cambios de ruta a lectores de pantalla
 - Focus management — gestionar foco en navegación programática
 - Imágenes: alt text obligatorio, decorativas con `alt=""`
@@ -386,6 +426,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `eslint-plugin-jsx-a11y` — detectar problemas en desarrollo
 
 ### Core Web Vitals y performance (1h)
+
 - LCP (Largest Contentful Paint) — optimizar imagen principal
 - CLS (Cumulative Layout Shift) — `next/font`, dimensiones de imágenes
 - INP (Interaction to Next Paint) — reemplaza a FID
@@ -397,9 +438,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 8 — proxy.ts, Seguridad y Patrones Avanzados de Routing
+
 **Duración:** 6 horas
 
 ### proxy.ts en profundidad (2h)
+
 - `proxy.ts` vs `middleware.ts` — diferencias en Next.js 16
 - Runtime: Node.js (`proxy.ts`) vs Edge (`middleware.ts` deprecado)
 - Anatomía: `export default function proxy(request: NextRequest)`
@@ -414,6 +457,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Rate limiting con contadores en headers o Redis
 
 ### Parallel Routes y Intercepting Routes (2h)
+
 - Parallel Routes (`@folder`) — cuándo tiene sentido usarlos
   - Caso de uso: dashboard con múltiples secciones independientes
   - `loading.tsx` y `error.tsx` independientes por slot
@@ -427,6 +471,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Combinar Parallel + Intercepting Routes para galerías
 
 ### Redirects y rewrites en next.config.ts (1h)
+
 - `redirects()` — permanentes (308) y temporales (307)
 - `rewrites()` — proxy transparente a otros dominios/paths
 - Rewrites para migración gradual desde otra plataforma
@@ -436,6 +481,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `trailingSlash` — consistencia de URLs
 
 ### Seguridad en Next.js (1h)
+
 - Server Actions — validar siempre entrada y sesión
 - SQL Injection — usar ORM o queries parametrizadas
 - XSS — Next.js escapa automáticamente en JSX
@@ -448,9 +494,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 9 — Integración con APIs Externas y Servicios
+
 **Duración:** 6 horas
 
 ### Patrones de integración con APIs externas (1.5h)
+
 - Backend for Frontend (BFF) — Next.js como capa de agregación
 - Llamadas a APIs REST desde Server Components — sin exponer tokens
 - Proxy de API en Route Handlers — reenviar requests al backend
@@ -460,6 +508,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Caching de respuestas externas con `"use cache"` + `cacheLife`
 
 ### Bases de datos y ORM avanzado (1.5h)
+
 - Drizzle ORM avanzado — relaciones, joins, transacciones
 - Migrations con `drizzle-kit`
 - Prisma — relaciones, middleware, transacciones
@@ -470,6 +519,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - MongoDB con Mongoose desde Server Components
 
 ### Almacenamiento de archivos (1h)
+
 - Uploadthing — la opción más integrada con Next.js
 - Cloudinary — transformaciones de imágenes en la nube
 - AWS S3 con presigned URLs — upload directo desde cliente
@@ -477,6 +527,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Validar tipo y tamaño de archivo en servidor
 
 ### Email y notificaciones (1h)
+
 - Resend — el servicio de email recomendado para Next.js 2025
 - React Email — templates de email con componentes React
 - Enviar email desde Server Actions o Route Handlers
@@ -484,6 +535,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Webhook de email — procesar respuestas y bounces
 
 ### Tiempo real en Next.js (1h)
+
 - Server-Sent Events (SSE) con Route Handlers — streaming unidireccional
 - WebSockets — limitaciones en serverless, soluciones: Pusher, Ably, Soketi
 - Supabase Realtime — suscripciones en tiempo real
@@ -493,9 +545,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 10 — Performance Avanzada y Turbopack
+
 **Duración:** 6 horas
 
 ### Turbopack en profundidad (1.5h)
+
 - Turbopack vs Webpack — diferencias arquitectónicas
 - Turbopack estable en Next.js 16 — activado por defecto
 - Turbopack File System Caching (beta) — startup persistente entre reinicios
@@ -507,6 +561,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Logging de build mejorado en Next.js 16 — Compile vs Render timing
 
 ### Cache Components y PPR avanzado (2h)
+
 - Partial Pre-Rendering (PPR) — arquitectura completa
 - Static shell + dynamic holes — cómo funciona internamente
 - Habilitar: `cacheComponents: true` en `next.config.ts`
@@ -521,6 +576,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Depurar PPR con DevTools MCP
 
 ### Code splitting y lazy loading avanzado (1.5h)
+
 - Automatic code splitting por ruta — cómo funciona en App Router
 - `dynamic()` — lazy loading manual de componentes pesados
 - Suspense boundaries estratégicos — qué va en qué boundary
@@ -531,6 +587,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Reducing JavaScript payload — identificar componentes a dividir
 
 ### Optimización de runtime (1h)
+
 - React Compiler — cuándo activarlo y cuándo no
 - Memoización automática vs manual (`useMemo`, `useCallback`, `memo`)
 - Evitar re-renders innecesarios con composición correcta
@@ -541,15 +598,18 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 11 — Testing en Next.js
+
 **Duración:** 6 horas
 
 ### Estrategia de testing para Next.js (0.5h)
+
 - Pirámide de tests: unitarios → integración → E2E
 - Qué testear: Server Components, Client Components, Actions, Route Handlers
 - Herramientas recomendadas: Vitest + Testing Library + Playwright
 - Jest vs Vitest — Vitest es la opción moderna (más rápido, ESM nativo)
 
 ### Vitest y React Testing Library (2h)
+
 - Setup: `vitest` + `@testing-library/react` + `@testing-library/user-event`
 - Configurar `vitest.config.ts` para Next.js
 - Testear Client Components — render, eventos, estado
@@ -562,6 +622,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Coverage con v8 — umbrales mínimos recomendados
 
 ### Playwright — E2E Testing (2h)
+
 - Setup con `npx create-playwright`
 - Configurar para Next.js — `webServer` en `playwright.config.ts`
 - Escribir tests E2E — navegación, formularios, autenticación
@@ -574,6 +635,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Playwright Trace Viewer — debuggear tests fallidos
 
 ### Cypress (alternativa) y Testing Library avanzado (1h)
+
 - Cuándo elegir Cypress vs Playwright
 - Cypress Component Testing para Client Components
 - Accessibility testing con `jest-axe` o `@axe-core/playwright`
@@ -582,6 +644,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Continuous testing en desarrollo con watch mode
 
 ### Debugging en Next.js (0.5h)
+
 - DevTools MCP de Next.js 16 — conectar IA al servidor de desarrollo
 - Logs mejorados en Next.js 16 — Compile time vs Render time
 - Source maps en producción — configurar en `next.config.ts`
@@ -591,9 +654,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 12 — Internacionalización (i18n) y Multi-tenant
+
 **Duración:** 6 horas
 
 ### i18n en Next.js App Router (2.5h)
+
 - App Router no tiene i18n built-in — necesita implementación manual o librería
 - Estructura de rutas: `app/[lang]/page.tsx`
 - Detectar idioma en `proxy.ts` y redirigir
@@ -610,6 +675,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Selección de idioma — switcher de idioma y persistencia
 
 ### Multi-tenant con Next.js (2h)
+
 - Arquitectura multi-tenant — un deployment, múltiples dominios/subdomains
 - Subdomain routing con `proxy.ts` — leer hostname y redirigir
 - Wildcard DNS y certificados SSL multi-tenant
@@ -620,6 +686,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Custom domains — permitir que usuarios agreguen sus dominios
 
 ### Feature flags y A/B testing (1.5h)
+
 - Feature flags en `proxy.ts` — activar features por usuario/región/porcentaje
 - Cookies para persistir assignment de A/B test
 - Integración con LaunchDarkly, Vercel Feature Flags, Statsig
@@ -630,9 +697,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 13 — Deploy, CI/CD y Self-hosting
+
 **Duración:** 6 horas
 
 ### Deploy en Vercel (1.5h)
+
 - Conectar repo GitHub a Vercel — configuración básica
 - Variables de entorno en Vercel dashboard
 - Preview Deployments — cada PR tiene su propio URL
@@ -645,6 +714,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Límites del plan Hobby vs Pro — cuándo pagar
 
 ### CI/CD con GitHub Actions (1.5h)
+
 - Workflow básico: lint + test + build en cada PR
 - Caché de dependencias en GitHub Actions — `node_modules`, `.turbo`
 - Playwright en CI — correr E2E con Playwright
@@ -655,6 +725,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Semantic versioning y changelog automático con `semantic-release`
 
 ### Self-hosting de Next.js (2h)
+
 - Output modes: standalone (servidor Node), static export, custom server
 - Standalone output — Docker-ready, mínimas dependencias
 - Dockerfile optimizado para Next.js standalone
@@ -667,6 +738,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Build Adapters API (alpha) en Next.js 16 — crear adaptadores custom
 
 ### Monitoreo y observabilidad (1h)
+
 - OpenTelemetry en Next.js — instrumentación con `instrumentation.ts`
 - `instrumentation-client.ts` — telemetría en el cliente (Next.js 16)
 - Sentry — error tracking para Next.js
@@ -678,9 +750,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 14 — Arquitectura Avanzada y Patrones de Producción
+
 **Duración:** 6 horas
 
 ### Arquitectura de código en Next.js (1.5h)
+
 - Feature-based folder structure vs type-based — cuándo usar cada una
 - Barrel files (`index.ts`) — ventajas y problemas de performance
 - Path aliases en `tsconfig.json` — `@/components`, `@/lib`, `@/server`
@@ -691,6 +765,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - `next/server` vs `next/client` — cuándo importar cada uno
 
 ### Turborepo y Monorepos (2h)
+
 - Cuándo necesitas un monorepo
 - Turborepo — setup con `create-turbo`
 - Workspace structure: `apps/` y `packages/`
@@ -702,6 +777,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Deploying monorepo en Vercel — configurar root directory
 
 ### Patrones avanzados del App Router (1.5h)
+
 - MDX en Next.js — blog técnico con componentes React
   - `@next/mdx` o `next-mdx-remote`
   - `MDXComponents` — personalizar rendering de Markdown
@@ -713,6 +789,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - SPA mode en Next.js 16 — deshabilitar SSR completamente
 
 ### Rendimiento a escala (1h)
+
 - Edge Runtime vs Node.js Runtime — cuándo usar cada uno
 - Vercel Edge Functions — deploy en más de 40 regiones
 - Redis / Upstash para caché externo — session store, rate limiting
@@ -723,9 +800,11 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 ---
 
 ## Día 15 — Integración con IA y Proyecto Final
+
 **Duración:** 6 horas
 
 ### Next.js con AI/LLMs (2h)
+
 - Vercel AI SDK — la librería estándar para IA en Next.js
   - `useChat`, `useCompletion`, `useObject` — hooks para UI de IA
   - `streamText`, `streamObject` — streaming de respuestas
@@ -738,6 +817,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - DevTools MCP — interactuar con IA desde el servidor de Next.js
 
 ### Patrones de proyecto real y revisión (2h)
+
 - SaaS starter pattern — auth + billing + dashboard + onboarding
 - E-commerce pattern — catálogo estático + carrito dinámico + checkout
 - Blog/CMS pattern — MDX o Headless CMS + ISR
@@ -748,6 +828,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 - Comunidades: Next.js Discord, Twitter/X #nextjs, GitHub Discussions
 
 ### Revisión final y next steps (2h)
+
 - Repaso de conceptos clave: renderizado, caching, autenticación, performance
 - Checklist de producción — lo que no se puede olvidar antes de lanzar
   - Security headers, CSP, CORS, rate limiting
@@ -763,18 +844,19 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 
 ## Referencia rápida — Terminología Next.js 16
 
-| Concepto | Next.js 16 | Versión anterior |
-|---|---|---|
-| Interceptor de requests | `proxy.ts` | `middleware.ts` |
-| Caching | Opt-in con `"use cache"` | Implícito en `fetch` |
-| PPR | `cacheComponents: true` | `experimental.ppr: true` |
-| Invalidación inmediata | `updateTag()` | Solo `revalidateTag()` |
-| Bundler por defecto | Turbopack | Webpack |
-| Páginas 401/403 | `unauthorized.js` / `forbidden.js` | No existían |
-| Telemetría cliente | `instrumentation-client.ts` | No existía |
-| React | 19.2 | 18.x / 19.0 |
+| Concepto                | Next.js 16                         | Versión anterior         |
+| ----------------------- | ---------------------------------- | ------------------------ |
+| Interceptor de requests | `proxy.ts`                         | `middleware.ts`          |
+| Caching                 | Opt-in con `"use cache"`           | Implícito en `fetch`     |
+| PPR                     | `cacheComponents: true`            | `experimental.ppr: true` |
+| Invalidación inmediata  | `updateTag()`                      | Solo `revalidateTag()`   |
+| Bundler por defecto     | Turbopack                          | Webpack                  |
+| Páginas 401/403         | `unauthorized.js` / `forbidden.js` | No existían              |
+| Telemetría cliente      | `instrumentation-client.ts`        | No existía               |
+| React                   | 19.2                               | 18.x / 19.0              |
 
 ## Recursos oficiales
+
 - Documentación: https://nextjs.org/docs
 - Blog (changelogs): https://nextjs.org/blog
 - GitHub: https://github.com/vercel/next.js
