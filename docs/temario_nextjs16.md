@@ -857,7 +857,7 @@ Este documento es el temario de aprendizaje de Next.js 16 del estudiante. Úsalo
 
 ## Recursos oficiales
 
-- Documentación: https://nextjs.org/docs
-- Blog (changelogs): https://nextjs.org/blog
-- GitHub: https://github.com/vercel/next.js
-- Guía de upgrade a v16: https://nextjs.org/docs/app/guides/upgrading/version-16
+- Documentación: <https://nextjs.org/docs>
+- Blog (changelogs): <https://nextjs.org/blog>
+- GitHub: <https://github.com/vercel/next.js>
+- Guía de upgrade a v16: <https://nextjs.org/docs/app/guides/upgrading/version-16>

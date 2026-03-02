@@ -24,23 +24,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/globals.css" />
-        <title>Base Project</title>
-        <meta name="description" content="Base Project" />
-      </head>
-
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-        </nav>
-        {children}
+        <div className="flex flex-col min-h-screen">
+          <header className="py-4 px-8 border-b">
+            <nav className="flex items-center justify-between">
+              <Link href="/" className="font-bold text-lg">
+                MyPortfolio
+              </Link>
+              <div className="flex items-center gap-4">
+                <Link href="/">Home</Link>
+                <Link href="/projects">Projects</Link>
+                <Link href="/about">About</Link>
+                <Link href="/contact">Contact</Link>
+              </div>
+            </nav>
+          </header>
+          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {children}
+          </main>
+          <footer className="py-4 px-8 text-center border-t">
+            <p>
+              © {new Date().getFullYear()} MyPortfolio. All rights reserved.
+            </p>
+          </footer>
+        </div>
       </body>
     </html>
   );

@@ -857,7 +857,7 @@ This document is the student's Next.js 16 learning curriculum. Use it as a refer
 
 ## Official Resources
 
-- Documentation: https://nextjs.org/docs
-- Blog (changelogs): https://nextjs.org/blog
-- GitHub: https://github.com/vercel/next.js
-- Upgrade guide to v16: https://nextjs.org/docs/app/guides/upgrading/version-16
+- Documentation: <https://nextjs.org/docs>
+- Blog (changelogs): <https://nextjs.org/blog>
+- GitHub: <https://github.com/vercel/next.js>
+- Upgrade guide to v16: <https://nextjs.org/docs/app/guides/upgrading/version-16>

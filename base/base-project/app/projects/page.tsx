@@ -1,20 +1,16 @@
-import { useRouter } from "next/router";
 import { getProjects } from "../../lib/data";
+import { ProjectItem } from "./_components/ProjectItem";
 
-export default async function Page() {
+export default async function ProjectsPage() {
   const projects = await getProjects();
-  const navigateToProject = (id: string) => {
-    // take the user to /projects/[id]
-    useRouter().push(`/projects/${id}`);
-  };
   return (
-    <ul>
-      {projects.map((p) => (
-        <li key={p.id}>
-          {p.title}
-          <button onClick={() => navigateToProject(p.id)}>View Details</button>
-        </li>
-      ))}
-    </ul>
+    <section>
+      <h1 className="text-3xl font-bold mb-8">My Projects</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((p) => (
+          <ProjectItem key={p.id} id={p.id} title={p.title} />
+        ))}
+      </div>
+    </section>
   );
 }
