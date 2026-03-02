@@ -1,0 +1,44 @@
+[
+  {
+    "id": "next-blog-platform",
+    "title": "Next Blog Platform",
+    "description": "Blog app with markdown posts, tags, and search.",
+    "image": "/images/projects/next-blog-platform.png",
+    "url": "https://example.com/next-blog-platform"
+  },
+  {
+    "id": "taskflow-dashboard",
+    "title": "TaskFlow Dashboard",
+    "description": "Kanban dashboard for team tasks and sprint tracking.",
+    "image": "/images/projects/taskflow-dashboard.png",
+    "url": "https://example.com/taskflow-dashboard"
+  },
+  {
+    "id": "ecommerce-lite",
+    "title": "Ecommerce Lite",
+    "description": "Minimal ecommerce storefront with cart and checkout flow.",
+    "image": "/images/projects/ecommerce-lite.png",
+    "url": "https://example.com/ecommerce-lite"
+  },
+  {
+    "id": "recipe-finder",
+    "title": "Recipe Finder",
+    "description": "Search recipes by ingredients and save favorites.",
+    "image": "/images/projects/recipe-finder.png",
+    "url": "https://example.com/recipe-finder"
+  },
+  {
+    "id": "travel-journal",
+    "title": "Travel Journal",
+    "description": "Personal travel log with map markers and photo notes.",
+    "image": "/images/projects/travel-journal.png",
+    "url": "https://example.com/travel-journal"
+  },
+  {
+    "id": "portfolio-v2",
+    "title": "Portfolio v2",
+    "description": "Developer portfolio with project filters and contact form.",
+    "image": "/images/projects/portfolio-v2.png",
+    "url": "https://example.com/portfolio-v2"
+  }
+]

@@ -17,6 +17,32 @@ The key architectural shift:
 In the App Router: - Components are **Server Components by default** -
 Client Components are opt-in with `"use client"`
 
+### Setup
+
+```bash
+npx create-next-app@latest my-portfolio --typescript --tailwind --app
+```
+
+**Turbopack** comes by default in development for super fast HMR.
+
+The initial file structure aim to understand where your code lives:
+
+```plain
+app/                  ← root directory for your code and routes
+├── layout.tsx        ← layout global for all the app
+├── page.tsx          ← root route "/"
+├── about/
+│   └── page.tsx      ← "/about" route
+└── projects/
+    ├── page.tsx      ← "/projects" route
+    └── [slug]/
+        └── page.tsx  ← "/projects/:slug" dynamic route
+public/               ← static assets (images, fonts, etc.)
+next.config.ts        ← global configuration for Next.js (build and runtime)
+```
+
+`next.config.ts` — it is not any more js, since Next.js 16 is TypeScript.
+
 ---
 
 ## 2. `next.config.ts` / `next.config.js`
@@ -55,7 +81,37 @@ export default nextConfig;
 
 Next.js uses filesystem-based routing with special filenames.
 
-### `page.tsx`
+### Special Files in Route Folders
+
+The App Router uses naming conventions. Each file has a fixed role:
+
+| File            | What it does                                                                        |
+| --------------- | ----------------------------------------------------------------------------------- |
+| `page.tsx`      | Defines the route. Without this file, the folder is not a public route              |
+| `layout.tsx`    | Wraps the page. **Does not re-mount** when navigating between child routes          |
+| `template.tsx`  | Same as layout but **does re-mount**. Use sparingly — entry animations, state reset |
+| `loading.tsx`   | Automatic loading UI. Next.js wraps it in `<Suspense>` for you                      |
+| `error.tsx`     | Error boundary per route. Receives the error and a retry button                     |
+| `not-found.tsx` | Custom 404 page per segment                                                         |
+
+**Important gotcha — `layout.tsx` vs `template.tsx`:** The difference is not just conceptual. Since `layout` does not re-mount, the state living in it persists between navigations. If you have a counter or a form in a layout, it does not reset when navigating. `template` does reset it. For a portfolio you’ll almost always use `layout`.
+
+#### Complete Routing System
+
+- **Static routes:** the folder defines the URL.
+
+  ```plain
+  app/about/page.tsx → /about
+  app/projects/page.tsx → /projects
+  ```
+
+- **Dynamic routes:** brackets capture the variable segment.
+
+  ```plain
+  app/projects/[slug]/page.tsx → /projects/my-project
+  ```
+
+### The `page.tsx`
 
 Defines a route segment. Executed as a Server Component by default.
 
@@ -133,14 +189,14 @@ Layouts persist. Templates remount. Pages re-execute on navigation.
 
 ### Static Routes
 
-    app/dashboard/page.tsx
-    → /dashboard
+app/dashboard/page.tsx
+→ /dashboard
 
 ---
 
 ### Dynamic Routes
 
-    app/blog/[slug]/page.tsx
+app/blog/[slug]/page.tsx
 
 Access params:
 
@@ -154,7 +210,7 @@ export default function Page({ params }) {
 
 ### Catch-All
 
-    [...slug]
+[...slug]
 
 Matches multiple segments.
 
@@ -162,7 +218,7 @@ Matches multiple segments.
 
 ### Route Groups
 
-    (group)/dashboard
+(group)/dashboard
 
 Used for organization. Does NOT affect URL.
 
@@ -196,6 +252,23 @@ computation
 
 Advantages: - No JS sent to client - Smaller bundles - Better security
 
+```tsx
+// Server Component (default) — no "use client"
+// ✅ it can use: async/await, fetch, DB access, secrets
+// ❌ it cannot use: useState, useEffect, event handlers, browser APIs
+
+export default async function ProjectList() {
+  const projects = await getProjectsFromDB(); // allowed in Server Components
+  return (
+    <ul>
+      {projects.map((p) => (
+        <li key={p.id}>{p.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
 ---
 
 ### Client Components (`"use client"`)
@@ -205,6 +278,20 @@ Handling events - Accessing browser APIs
 
 Anti-pattern: Fetching sensitive data in Client Components when it could
 be done on the server.
+
+```tsx
+// Client Component
+"use client";
+// ✅ It can use: useState, useEffect, onClick, hooks
+// ❌ it cannot use: async/await, fetch (without polyfill), DB access, secrets, server-only modules
+
+import { useState } from "react";
+
+export function ContactForm() {
+  const [name, setName] = useState("");
+  return <input value={name} onChange={(e) => setName(e.target.value)} />;
+}
+```
 
 ---
 
@@ -235,6 +322,13 @@ Functions marked with:
 
 ```ts
 "use server";
+
+export async function userUpdate() {
+  if (condition) {
+    throw new Error("Unauthorized");
+  }
+  await db.user.update(...);
+}
 ```
 
 They are transformed by Next into RPC endpoints.
@@ -247,16 +341,16 @@ Not normal functions.
 
 When called from a Client Component:
 
-1.  Next generates a hidden POST endpoint.
-2.  Arguments are serialized.
-3.  Browser sends request.
-4.  Server executes function.
+1. Next generates a hidden POST endpoint.
+2. Arguments are serialized.
+3. Browser sends request.
+4. Server executes function.
 
 It is HTTP under the hood.
 
 ---
 
-### Example
+### Example of Server Action
 
 ```ts
 "use server"
