@@ -1,4 +1,4 @@
-import { getProjects } from "../../lib/data";
+import { getProjects } from "./_lib/data";
 import { ProjectItem } from "./_components/ProjectItem";
 
 export default async function ProjectsPage() {

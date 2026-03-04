@@ -1,6 +1,9 @@
 // app/projects/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import { getProjectById as getProjectBySlug, getProjects } from "@/lib/data";
+import {
+  getProjectById as getProjectBySlug,
+  getProjects,
+} from "@/app/projects/_lib/data";
 import Link from "next/link";
 
 export async function generateStaticParams() {

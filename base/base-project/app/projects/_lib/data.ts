@@ -1,7 +1,7 @@
 // lib/data.ts
 "use server";
-import projectsData from "../data/projects.json";
-import Project from "../types/project";
+import projectsData from "../../../data/projects.json";
+import Project from "../../../types/project";
 import { cache } from "react";
 
 export const getProjects = cache(async (): Promise<Project[]> => {

@@ -1,3 +1,10 @@
-export default function Page() {
-  return <h1>Welcome to page!</h1>;
+import { ContactForm } from "@/app/contact/_components/contactForm";
+
+export default function ContactPage() {
+  return (
+    <main>
+      <h1>Contact</h1>
+      <ContactForm />
+    </main>
+  );
 }
