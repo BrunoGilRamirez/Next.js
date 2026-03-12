@@ -15,7 +15,7 @@
    Sessions / Tokens               temporary signed URLs
 ```
 
-![ERD by Platform](Portafolio-1.svg)
+![ERD by Platform](Portafolio.png)
 
 ---
 
