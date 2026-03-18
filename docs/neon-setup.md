@@ -1,6 +1,7 @@
 # Neon Setup — Instructivo completo
 
 ## Requisitos previos
+
 - Cuenta en [neon.tech](https://neon.tech) (free tier)
 - Node.js 18+ instalado
 - Proyecto Next.js inicializado
@@ -19,9 +20,9 @@
    - **PostgreSQL version:** `16`
 4. Click en **"Create Project"**
 5. Neon te mostrará tu connection string. **Cópiala y guárdala**, la necesitarás pronto:
-   ```
-   postgresql://[user]:[password]@[host]/[dbname]?sslmode=require
-   ```
+   `plain
+    postgresql://[user]:[password]@[host]/[dbname]?sslmode=require
+    `
 
 ### Paso 2: Crear los branches
 
@@ -69,6 +70,7 @@ DATABASE_URL="postgresql://[user]:[password]@[host]/[dbname]?sslmode=require"
 ```
 
 Verifica que `.env.local` esté en tu `.gitignore`:
+
 ```bash
 # .gitignore
 .env.local
@@ -81,28 +83,28 @@ Crea el archivo `drizzle.config.ts` en la raíz del proyecto:
 
 ```typescript
 // drizzle.config.ts
-import type { Config } from 'drizzle-kit'
+import type { Config } from "drizzle-kit";
 
 export default {
-  schema: './src/db/schema',       // donde vivirán tus schemas
-  out: './src/db/migrations',      // donde se guardan las migraciones
-  dialect: 'postgresql',
+  schema: "./src/db/schema", // donde vivirán tus schemas
+  out: "./src/db/migrations", // donde se guardan las migraciones
+  dialect: "postgresql",
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-} satisfies Config
+} satisfies Config;
 ```
 
 Crea el cliente de DB en `src/db/client.ts`:
 
 ```typescript
 // src/db/client.ts
-import { neon } from '@neondatabase/serverless'
-import { drizzle } from 'drizzle-orm/neon-http'
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 
 // This file runs only on the server — never import from Client Components
-const sql = neon(process.env.DATABASE_URL!)
-export const db = drizzle(sql)
+const sql = neon(process.env.DATABASE_URL!);
+export const db = drizzle(sql);
 ```
 
 Agrega los scripts a `package.json`:
@@ -519,7 +521,7 @@ ORDER BY event_object_table;
 
 Resultado esperado de la primera query — 12 tablas:
 
-```
+```plain
 download_record
 license
 notifications
@@ -566,7 +568,7 @@ Elimina este archivo antes de hacer deploy.
 
 ## Resumen de archivos creados
 
-```
+```plain
 proyecto/
 ├── .env.local                  ← DATABASE_URL + DATABASE_URL_MIGRATION
 ├── drizzle.config.ts           ← configuración de Drizzle Kit
