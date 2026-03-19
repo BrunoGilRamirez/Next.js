@@ -8,7 +8,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Run on all routes except static files and Next.js internals
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // Keep auth refresh away from the Neon smoke test while TLS is being verified.
+    "/((?!_next/static|_next/image|favicon.ico|db-test|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
